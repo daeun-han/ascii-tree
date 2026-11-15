@@ -74,7 +74,7 @@ def _build_face(bright):
             ch = RAMP[min(len(RAMP) - 1, int(b * len(RAMP)))]
             if ch == " ":
                 continue
-            cells.append((r, px, py, ch, shade(WARM, 0.3 + 0.7 * b)))
+            cells.append((r, px, py, ch, shade(WARM, 0.1 + 0.9 * b)))
     return cells
 
 
