@@ -93,7 +93,7 @@ def _progress(seq):
 def main():
     ap = argparse.ArgumentParser(description="아스키 크리스마스 트리")
     ap.add_argument("--frame", type=float, help="이 시점(초)의 한 장만 PNG로 저장")
-    ap.add_argument("--loops", type=int, default=2, help="영상에서 애니메이션을 반복할 횟수")
+    ap.add_argument("--loops", type=int, default=1, help="영상에서 애니메이션을 반복할 횟수")
     ap.add_argument("--no-play", action="store_true", help="만든 뒤 자동 재생하지 않음")
     args = ap.parse_args()
     os.makedirs(OUT, exist_ok=True)
