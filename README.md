@@ -2,7 +2,7 @@
 
 # ASCII Christmas Tree
 
-화면에 보이는 모든 것이 글자인 크리스마스 트리 애니메이션
+13초 영상만 보고 10분 만에 다시 만든 아스키 크리스마스 트리
 
 ![Python](https://img.shields.io/badge/Python-3.13-3776AB?logo=python&logoColor=white)
 ![NumPy](https://img.shields.io/badge/NumPy-013243?logo=numpy&logoColor=white)
@@ -13,7 +13,8 @@
 
 </div>
 
-인스타그램 [릴스](https://www.instagram.com/p/DfviMzevtMx/) 한 편을 소스 없이 결과 화면만 보고 분석해서, 바이브 코딩으로 다시 만든 리버스 엔지니어링 프로젝트입니다.
+인스타그램 [릴스](https://www.instagram.com/p/DfviMzevtMx/) 한 편을 소스 없이 화면만 보고 분석한 리버스 엔지니어링 프로젝트입니다.
+설계는 Claude Fable 5.2가, 구현은 Claude Opus 에이전트 3개가 동시에 맡는 방식으로 바이브 코딩했습니다.
 
 <div align="center">
 
