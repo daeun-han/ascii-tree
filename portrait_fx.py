@@ -81,7 +81,9 @@ def _build_face(bright):
 FACE_CELLS = _build_face(_load_brightness())
 
 # ---------------- 2. 산타 모자 격자 ----------------
-HAT_X, HAT_Y, HAT_W, HAT_H = 120, 190, 390, 240     # 모자가 차지하는 화면 영역
+HAT_W, HAT_H = 390, 240                             # 모자 도안 크기
+HAT_SCALE = 0.6                                     # 머리 폭에 맞게 도안을 줄여서 쓴다
+HAT_X, HAT_Y = 217, 303                             # 줄인 모자의 왼쪽 위 (챙이 이마 위에 걸친다)
 HAT_CW, HAT_CH = 8, 12                              # 모자 글자 칸 크기
 
 
@@ -99,17 +101,18 @@ def _build_hat():
     p.polygon(bez((45, 210), (150, 50), tip) + bez(tip, (285, 95), (345, 210)), fill=(255, 0, 0))
     p.rounded_rectangle((10, 196, 380, 240), radius=22, fill=(0, 255, 0))   # 흰 챙
     p.ellipse((322, 4, 382, 64), fill=(0, 255, 0))                          # 방울
-    a = np.asarray(im)
+    w, h = int(HAT_W * HAT_SCALE), int(HAT_H * HAT_SCALE)
+    a = np.asarray(im.resize((w, h), Image.NEAREST))
     gen = core.rng(7)
     cells = []
-    for y in range(0, HAT_H - HAT_CH // 2, HAT_CH):
-        for x in range(0, HAT_W - HAT_CW // 2, HAT_CW):
+    for y in range(0, h - HAT_CH // 2, HAT_CH):
+        for x in range(0, w - HAT_CW // 2, HAT_CW):
             r, g, _ = a[y + HAT_CH // 2, x + HAT_CW // 2]
             if g > 128:          # 흰 털: 몽글몽글한 질감
                 ch = "@#o*"[gen.integers(4)]
                 col = shade(core.WHITE, 0.8 + 0.2 * gen.random())
             elif r > 128:        # 빨간 몸통: 왼쪽 위가 밝은 음영
-                k = 1.05 - 0.45 * (x / HAT_W) * 0.6 - 0.35 * (y / HAT_H)
+                k = 1.05 - 0.45 * (x / w) * 0.6 - 0.35 * (y / h)
                 ch = "#%@&"[gen.integers(4)]
                 col = shade(core.RED, clamp01(k + 0.1 * gen.random()) + 0.05)
             else:
