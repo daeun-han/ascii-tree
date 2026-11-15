@@ -82,8 +82,25 @@ FACE_CELLS = _build_face(_load_brightness())
 
 # ---------------- 2. 산타 모자 격자 ----------------
 HAT_W, HAT_H = 390, 240                             # 모자 도안 크기
-HAT_SCALE = 0.6                                     # 머리 폭에 맞게 도안을 줄여서 쓴다
-HAT_X, HAT_Y = 166, 303                             # 줄인 모자의 왼쪽 위 (원 가운데, 챙이 이마 위에 걸친다)
+
+
+def _fit_hat(cells):
+    """얼굴 글자 배치를 보고 모자의 (배율, 왼쪽 위 x, y)를 정한다.
+    머리 윗부분의 폭에 모자 폭을 맞추고, 챙이 이마 맨 윗줄에 걸치게 놓는다."""
+    solid = [(r, x) for r, x, _, ch, _ in cells if ch not in ".:-"]      # 또렷한 글자만 머리로 본다
+    rows = sorted({r for r, _ in solid if sum(1 for q, _ in solid if q == r) >= 5})
+    if not rows:
+        return 0.6, PORTRAIT_C[0] - HAT_W * 0.3, 303.0
+    top = rows[0]
+    xs = [x for r, x in solid if top <= r < top + 8]
+    width, mid = max(xs) - min(xs) + CELL_W, (max(xs) + min(xs)) / 2
+    scale = max(0.5, min(1.05, width * 1.25 / 370))                      # 370 = 도안에서 챙의 폭
+    brim_bottom = PORTRAIT_C[1] - GRID_W / 2 + (top + 1.5) * CELL_H
+    return scale, mid - HAT_W * scale / 2, brim_bottom - HAT_H * scale
+
+
+HAT_SCALE, HAT_X, HAT_Y = _fit_hat(FACE_CELLS)      # 사진마다 머리에 맞게 자동으로 정해진다
+HAT_X, HAT_Y = int(HAT_X), int(HAT_Y)
 HAT_CW, HAT_CH = 8, 12                              # 모자 글자 칸 크기
 
 
